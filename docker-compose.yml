@@ -6,18 +6,13 @@ services:
     # Change the host port if needed.
     # You need to set this port in Raycast settings.
     ports:
-      - "11435:3000"
+      - '${HOST_PORT:-11435}:${PORT:-3000}'
     # Mount the local 'models.json' file into the container.
     # This file contains the model definitions used by the proxy.
     volumes:
       - ./models.json:/app/models.json:ro
     environment:
-      # Set the API key as an environment variable.
-      # For production environments, it's highly recommended to use
-      # a .env file or Docker secrets for sensitive information like API keys,
-      # rather than hardcoding them here.
-      - API_KEY=YOUR_API_KEY
-      # Set the base URL for the API.
-      # This should be an OpenAI-compatible API endpoint.
-      # The default is OpenRouter.
-      - BASE_URL=https://openrouter.ai/api/v1
+      # Read from local .env file
+      - PORT=${PORT:-3000}
+      - API_KEY=${API_KEY}
+      - BASE_URL=${BASE_URL:-https://openrouter.ai/api/v1}
